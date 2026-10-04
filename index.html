@@ -1,0 +1,285 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="One API key for hundreds of AI models, at or below list price."><meta property="og:title" content="Parity"><meta property="og:description" content="Never pay more for a token."><meta property="og:image" content="og.jpg"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="pfp.jpg"><script src="config.js"></script><title>Parity</title></head><body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: near-black page over a full-bleed grey fog skyline. Floating pill bar, own fox-skull mascot, token card pinned under the hero, then the credit-gateway demo (prompt card, price table, dashboard, two-line switch, holders). */
+:root{--bg:#060607;--panel:#0e0e10;--line:#232326;--text:#ececea;--muted:#8d8d92;--ok:#6fe3a4;--bad:#ff7a7a;--sans:"Instrument Sans",system-ui,sans-serif;--serif:"Instrument Serif",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html,body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.55 var(--sans);overflow-x:clip;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1040px;margin-inline:auto;padding-inline:20px}
+.lab{font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.btn{font:600 14px/1 var(--sans);padding:12px 18px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--text);text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn.w{background:#f2f2ef;color:#09090a;border-color:#f2f2ef}
+.btn[aria-disabled="true"]{opacity:.5;pointer-events:none}.btn.w[aria-disabled="true"]{background:transparent;color:var(--text);border:1px dashed #55555a;opacity:.75}
+.demo{background:#14120a;color:#d9cf9a;text-align:center;font:500 11px/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase;padding:9px 14px;border-bottom:1px solid #2a2612}
+/* nav */
+nav{position:sticky;top:0;z-index:20;background:rgba(6,6,7,.8);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .in{max-width:1040px;margin-inline:auto;padding:13px 20px;display:flex;align-items:center;gap:26px}
+.logo{font:400 26px/1 var(--serif);text-decoration:none;display:flex;align-items:center;gap:9px;letter-spacing:-.01em}
+.logo svg{width:22px;height:22px}
+nav .links{display:flex;gap:22px;font:500 14px/1 var(--sans);color:var(--muted);margin-left:8px}nav .links a{text-decoration:none}nav .links a:hover{color:var(--text)}
+nav .r{margin-left:auto;display:flex;gap:10px}
+/* hero */
+.hero{position:relative;min-height:760px;overflow:hidden;border-bottom:1px solid var(--line)}
+.city{position:absolute;inset:0;background:linear-gradient(180deg,#0b0b0d 0%,#1a1a1d 55%,#2a2a2e 100%)}
+.city svg{position:absolute;left:-5%;bottom:0;width:110%;height:78%}
+.city .fog{position:absolute;inset:0;background:radial-gradient(60% 50% at 62% 55%,rgba(210,210,214,.16),transparent 70%),linear-gradient(180deg,rgba(6,6,7,.55),transparent 35%,rgba(6,6,7,.9))}
+.pill{position:relative;z-index:3;margin:30px auto 0;width:max-content;max-width:calc(100% - 28px);display:flex;align-items:center;gap:8px;padding:6px;border-radius:999px;background:rgba(14,14,16,.78);border:1px solid var(--line);backdrop-filter:blur(8px);flex-wrap:wrap;justify-content:center}
+.pill .ca{display:flex;align-items:center;gap:8px;padding:6px 12px;font:500 12px var(--mono);color:#cfcfd2;max-width:300px}
+.pill .ca code{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pill .ca b{color:var(--muted);font-weight:500}
+.pill a,.pill button{font:600 12px/1 var(--sans);padding:9px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--text);text-decoration:none;cursor:pointer}
+.pill a[aria-disabled="true"]{opacity:.4;pointer-events:none}
+.hc{position:absolute;z-index:3;left:max(20px,calc(50% - 500px));top:215px;max-width:540px}
+.hc h1{font:400 clamp(46px,6.4vw,80px)/.98 var(--serif);letter-spacing:-.02em;margin:16px 0 0}
+.hc h1 em{font-style:italic;color:#bdbdc2}
+.hc p{color:#a7a7ac;max-width:420px;margin:20px 0 26px;font-size:17px}
+.hc .b{display:flex;gap:10px;flex-wrap:wrap}
+.glow{position:absolute;z-index:1;right:max(2%,calc(50% - 520px));top:80px;width:min(520px,80vw);aspect-ratio:1;background:radial-gradient(closest-side,rgba(235,235,240,.22),transparent 72%);pointer-events:none}
+.city .w{animation:wn 5s ease-in-out infinite}.city .w:nth-child(2n){animation-delay:-2s}.city .w:nth-child(3n){animation-delay:-3.5s}@keyframes wn{50%{opacity:.1}}
+.mascot{position:absolute;z-index:2;right:max(6%,calc(50% - 440px));top:150px;width:min(330px,42vw);animation:fl 6s ease-in-out infinite;filter:drop-shadow(0 0 40px rgba(235,235,240,.22)) drop-shadow(0 30px 40px rgba(0,0,0,.6))}.mascot .eye{transition:transform .12s}
+@keyframes fl{50%{transform:translateY(-14px) rotate(-1.5deg)}}
+.tcard{position:absolute;z-index:3;left:50%;bottom:26px;transform:translateX(-50%);width:min(960px,calc(100% - 28px));background:rgba(12,12,14,.9);border:1px solid var(--line);border-radius:18px;padding:16px 20px;backdrop-filter:blur(10px);display:grid;grid-template-columns:1.2fr 3fr;gap:18px;align-items:center}
+.tcard .who{display:flex;gap:12px;align-items:center}
+.tcard .who svg{width:42px;height:42px;border-radius:10px;background:#111}
+.tcard .who b{font-weight:600}.tcard .who small{display:block;color:var(--muted);font:400 11px var(--mono)}
+.tcard .st{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.tcard .st div span{display:block;font:500 10px var(--mono);letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+.tcard .st div b{font:600 15px var(--mono);font-variant-numeric:tabular-nums}
+.tcard .row{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{font:500 12px var(--sans);padding:8px 12px;border-radius:999px;border:1px solid var(--line);color:var(--text);text-decoration:none}
+.chip[aria-disabled="true"]{opacity:.4;pointer-events:none}
+/* sections */
+section{padding-block:96px 0}
+h2{font:400 clamp(34px,5.4vw,60px)/1.02 var(--serif);letter-spacing:-.015em;margin:14px 0 0;text-wrap:balance}
+h2 em{font-style:italic;color:#bdbdc2}
+.sub{color:var(--muted);max-width:560px;margin:18px 0 0}
+/* prompt card */
+.pc{margin-top:38px;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:20px;background:var(--panel);overflow:hidden}
+.pc>div{padding:26px}.pc .l{border-right:1px solid var(--line)}
+.pc .q{font:400 26px/1.25 var(--serif);margin:16px 0 22px;min-height:66px}
+.pc .q i{display:inline-block;width:2px;height:.9em;background:#ddd;vertical-align:-.1em;margin-left:2px;animation:bl 1s steps(1) infinite}@keyframes bl{50%{opacity:0}}
+.kv{display:flex;gap:10px;align-items:center;font:400 12px var(--mono);color:var(--muted);padding-top:16px;border-top:1px solid var(--line)}.kv b{color:var(--text);font-weight:500}
+.ans{font:400 14.5px/1.6 var(--sans);color:#c9c9cc;min-height:96px;margin-top:14px}
+.ans .tag{color:var(--ok);margin-left:8px}
+.sel{display:flex;justify-content:space-between;align-items:center;margin-top:18px;gap:10px}
+select{background:#151518;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font:500 13px var(--sans)}
+.pr{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-top:18px}
+.pr .a{font:500 34px/1 var(--sans);color:#55555a;text-decoration:line-through;text-decoration-thickness:1px;font-variant-numeric:tabular-nums}
+.pr .b{font:600 36px/1 var(--sans);font-variant-numeric:tabular-nums}.pr span.lab{display:block;margin-bottom:8px}
+.keep{margin-top:18px;border:1px solid #1d3b2c;background:#0b1812;border-radius:10px;padding:11px 14px;display:flex;justify-content:space-between;font:500 13px var(--mono);color:var(--ok)}
+/* calculator */
+.calc{margin-top:22px;border:1px solid var(--line);border-radius:20px;background:var(--panel);padding:26px;display:grid;grid-template-columns:1.2fr 1fr;gap:30px;align-items:center}
+.calc input[type=range]{width:100%;accent-color:#f2f2ef}
+.calc .big{font:400 54px/1 var(--serif);font-variant-numeric:tabular-nums}
+.calc dl{display:grid;grid-template-columns:1fr auto;gap:10px 14px;margin:0;font:400 13px var(--mono);color:var(--muted)}.calc dd{margin:0;color:var(--text);text-align:right}
+/* table */
+.tbl{margin-top:34px;border:1px solid var(--line);border-radius:20px;background:var(--panel);overflow:hidden}
+.tbl .top{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);gap:12px;flex-wrap:wrap}
+.tbl input{background:#151518;border:1px solid var(--line);border-radius:999px;color:var(--text);padding:9px 14px;font:400 13px var(--sans);width:220px}
+.mr{display:grid;grid-template-columns:34px 1fr auto auto;gap:14px;align-items:center;padding:13px 20px;border-bottom:1px solid #161618}
+.mr:last-child{border:0}
+.mr .ic{width:30px;height:30px;border-radius:8px;background:#1a1a1d;display:grid;place-items:center;font:600 11px var(--mono);color:#cfcfd2}
+.mr b{font-weight:600}.mr small{display:block;color:var(--muted);font:400 11px var(--mono)}
+.mr .o{color:#55555a;text-decoration:line-through;font:400 13px var(--mono)}
+.mr .n{font:600 16px var(--mono);font-variant-numeric:tabular-nums}
+.mr .d{font:500 11px var(--mono);color:var(--ok);border:1px solid #1d3b2c;border-radius:999px;padding:4px 9px;margin-left:10px}
+/* dash */
+.dash{margin-top:34px;display:grid;grid-template-columns:2fr 1fr;gap:16px}
+.box{border:1px solid var(--line);border-radius:20px;background:var(--panel);padding:22px}
+.bars{display:flex;align-items:flex-end;gap:7px;height:140px;margin-top:20px}.bars i{flex:1;background:linear-gradient(180deg,#f0f0ee,#5a5a5f);border-radius:4px 4px 0 0;min-height:4px}
+.bars i:nth-child(odd){opacity:.75}
+.dl{display:flex;justify-content:space-between;font:400 12px var(--mono);color:var(--muted);padding:9px 0;border-bottom:1px solid #161618}.dl:last-child{border:0}.dl b{color:var(--text);font-weight:500}
+.code{margin-top:34px;border:1px solid var(--line);border-radius:20px;background:#09090b;padding:22px;font:400 13px/1.8 var(--mono);color:#c9c9cc;overflow:auto;white-space:pre}
+.code s{text-decoration:none;color:#55555a}.code u{text-decoration:none;color:var(--ok)}
+.three{margin-top:34px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.three .box h3{font:400 26px/1.1 var(--serif);margin:12px 0 10px}.three .box p{color:var(--muted);font-size:14.5px;margin:0}
+.three .box .num{font:400 38px/1 var(--serif);color:#f2f2ef;margin-top:18px}
+.faq details{border-bottom:1px solid var(--line);padding:18px 0}.faq summary{cursor:pointer;font:500 17px var(--sans);list-style:none;display:flex;justify-content:space-between}.faq summary::after{content:"+";color:var(--muted)}.faq details[open] summary::after{content:"–"}.faq p{color:var(--muted);margin:10px 0 0;max-width:640px}
+footer{margin-top:110px;border-top:1px solid var(--line);padding-block:30px 60px;color:var(--muted);font-size:12.5px}
+footer .f{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:16px}footer a{text-decoration:none}
+.cta{text-align:center}.cta h2{margin-inline:auto;max-width:700px}.cta .b{margin-top:26px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+@media (max-width:860px){
+ nav .links{display:none}
+ .hero{min-height:1000px}.hc{top:340px}.hc h1{font-size:46px}.hc p{font-size:15.5px;margin:14px 0 20px}.glow{top:60px}.mascot{top:104px;right:50%;transform:translateX(50%);width:210px;animation:none}
+ .tcard{grid-template-columns:1fr}.tcard .st{grid-template-columns:1fr 1fr}
+ .pc,.calc,.dash,.three{grid-template-columns:1fr}.pc .l{border-right:0;border-bottom:1px solid var(--line)}
+ section{padding-block:68px 0}
+}
+@media (max-width:520px){.mr{grid-template-columns:30px 1fr auto}.mr .o{display:none}.tbl input{width:100%}.pr .a,.pr .b{font-size:26px}nav .r .btn:first-child{display:none}.pill .ca{max-width:200px}}
+@media (prefers-reduced-motion:reduce){.mascot{animation:none}.pc .q i{animation:none}}
+</style>
+
+<div class="demo">Demonstration · sample prices and numbers · the gateway is not live yet</div>
+<nav><div class="in">
+  <a class="logo" href="#top" id="top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4l5 4h8l5-4v8l-3 5-6 4-6-4-3-5z" fill="#ececea"/><path d="M7 11l4 1-1 2zM17 11l-4 1 1 2z" fill="#060607"/></svg>Parity</a>
+  <div class="links"><a href="#buy">Buy</a><a href="#supply">Supply</a><a href="#refer">Refer</a><a href="#models">Models</a><a href="#faq">FAQ</a></div>
+  <div class="r"><a class="btn" href="#buy">Sign in</a><a class="btn w" href="#buy">Get credits</a></div>
+</div></nav>
+
+<header class="hero">
+  <div class="city"><svg viewBox="0 0 1200 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <defs><linearGradient id="t1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3a3f"/><stop offset="1" stop-color="#121214"/></linearGradient><linearGradient id="t2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#26262a"/><stop offset="1" stop-color="#0b0b0d"/></linearGradient></defs>
+    <g fill="url(#t2)" opacity=".8"><rect x="40" y="260" width="90" height="340"/><rect x="150" y="210" width="70" height="390"/><rect x="250" y="300" width="110" height="300"/><rect x="390" y="180" width="80" height="420"/><rect x="500" y="280" width="100" height="320"/><rect x="640" y="230" width="90" height="370"/><rect x="760" y="290" width="120" height="310"/><rect x="900" y="200" width="80" height="400"/><rect x="1010" y="270" width="110" height="330"/></g>
+    <g fill="url(#t1)"><path d="M-10 600V350l90-30 30 20v260z"/><path d="M130 600V300h40l30 30v270z"/><path d="M820 600V250l40-40 60 30v360z"/><path d="M950 600V330l70-60 90 40v290z"/><path d="M1120 600V280l60-30 40 40v310z"/></g>
+    <g fill="#0a0a0c"><path d="M-10 600V470l140-40 60 30 120-60 70 40 110-30v190z"/><path d="M900 600V460l100-40 80 30 140-50v200z"/></g>
+    <g fill="#d8d8dc" opacity=".3"><rect class="w" x="415" y="215" width="6" height="10"/><rect class="w" x="430" y="245" width="6" height="10"/><rect class="w" x="665" y="270" width="6" height="10"/><rect class="w" x="925" y="240" width="6" height="10"/><rect class="w" x="180" y="250" width="6" height="10"/><rect class="w" x="420" y="300" width="6" height="10"/><rect class="w" x="670" y="320" width="6" height="10"/><rect class="w" x="935" y="290" width="6" height="10"/><rect class="w" x="190" y="300" width="6" height="10"/><rect class="w" x="560" y="330" width="6" height="10"/><rect class="w" x="800" y="360" width="6" height="10"/></g>
+  </svg><div class="fog"></div></div>
+
+  <div class="pill" id="pill">
+    <div class="ca"><b>CA</b><code id="ca">Posts at launch</code><button type="button" id="cp" hidden>Copy</button></div>
+    <a href="#buy" id="pb" aria-disabled="true">Buy</a><a href="#buy" id="pc" aria-disabled="true">Chart</a><a href="#buy" id="px" aria-disabled="true">X</a>
+  </div>
+
+  <div class="glow"></div>
+  <div class="hc"><div class="lab">Model credits · up to 6% under list</div><h1>Never pay more for a <em>token.</em></h1><p>A single key for hundreds of models. Top up once, nothing to cancel.</p><div class="b"><a class="btn w" href="#buy" style="background:#f2f2ef;border:1px solid #f2f2ef;color:#09090a;opacity:1">Get credits</a><a class="btn" href="#models">See the prices</a></div></div>
+  <svg class="mascot" id="mascot" viewBox="0 0 200 200" role="img" aria-label="Parity fox-skull mascot">
+    <defs><linearGradient id="mk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbfbf8"/><stop offset="1" stop-color="#b9b9b6"/></linearGradient></defs>
+    <path d="M26 14l52 46h44l52-46 6 84-30 54-34 30h-32l-34-30-30-54z" fill="url(#mk)" stroke="#0a0a0b" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M40 38l28 24-20 18zM160 38l-28 24 20 18z" fill="#8a8a88"/>
+    <path d="M44 92l46 12-10 20-34-8z M156 92l-46 12 10 20 34-8z" fill="#0a0a0b"/><path class="eye" d="M54 98l22 6-3 5zM146 98l-22 6 3 5z" fill="#f2f2ef" opacity=".85"/>
+    <path d="M91 138h18l-9 14z" fill="#0a0a0b"/>
+    <path d="M62 160l14-9 14 10 10-9 10 9 14-10 14 9" fill="none" stroke="#0a0a0b" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M100 66v34M72 70l8 22M128 70l-8 22" stroke="#0a0a0b" stroke-width="3" stroke-linecap="round" opacity=".5"/>
+  </svg>
+
+  <div class="tcard">
+    <div class="who"><svg viewBox="0 0 200 200"><rect width="200" height="200" fill="#0a0a0b"/><path d="M26 30l52 40h44l52-40 6 70-30 50-34 30h-32l-34-30-30-50z" fill="#f2f2ef"/><path d="M44 96l46 12-10 20-34-8zM156 96l-46 12 10 20 34-8z" fill="#0a0a0b"/></svg><div><b>$PARITY</b> · Parity token<small id="ct">Solana · pump.fun</small></div></div>
+    <div class="st"><div><span>Price</span><b id="t1">Posts at launch</b></div><div><span>Market cap</span><b>—</b></div><div><span>24h volume</span><b>—</b></div><div><span>Liquidity</span><b>—</b></div></div>
+    <div class="row"><a class="btn w" id="hb" href="#buy" aria-disabled="true">Buy $PARITY</a><a class="chip" id="h1" href="#buy" aria-disabled="true">pump.fun</a><a class="chip" id="h2" href="#buy" aria-disabled="true">DexScreener</a><a class="chip" id="h3" href="#buy" aria-disabled="true">GMGN</a><a class="chip" id="h4" href="#buy" aria-disabled="true">Axiom</a></div>
+  </div>
+</header>
+
+<main class="wrap">
+<section id="buy">
+  <div class="lab">The gateway</div>
+  <h2>Same models. One key. <em>Never above list.</em></h2>
+  <p class="sub">A single key for hundreds of models. Top up once, nothing to cancel. Every request is passed straight through at or below the lab's own list price.</p>
+  <div class="pc" aria-live="off">
+    <div class="l"><div class="lab">Example prompt</div><div class="q" id="q"></div><div class="kv">PARITY API KEY <b>pk-live-••••</b></div><div class="kv" style="border:0;padding-top:10px">▸ <a href="#switch" style="color:inherit">View API snippet</a></div></div>
+    <div><div class="lab">The answer <span class="tag" style="color:var(--ok);margin-left:6px">STREAMING</span></div><div class="ans" id="ans"></div>
+      <div class="sel"><select id="msel" aria-label="Model"></select><span class="lab">Per 1M output tokens</span></div>
+      <div class="pr"><div><span class="lab">List price</span><div class="a" id="pl">—</div></div><span class="lab">→</span><div><span class="lab">With Parity</span><div class="b" id="pp">—</div></div></div>
+      <div class="keep"><span>You keep <b id="pk">—</b></span><span id="pd">—</span></div>
+    </div>
+  </div>
+  <div class="calc">
+    <div><div class="lab">What would you keep?</div><div class="big" id="cb">$0</div><p class="sub" style="margin-top:10px">Drag to your monthly spend at list price.</p><input id="cr" type="range" min="50" max="20000" step="50" value="2000" aria-label="Monthly spend"></div>
+    <dl><dt>Spend at list price</dt><dd id="c1"></dd><dt>Parity price (6% under list)</dt><dd id="c2"></dd><dt>Platform fee (included)</dt><dd id="c3"></dd><dt>Saved per year</dt><dd id="c4"></dd></dl>
+  </div>
+</section>
+
+<section id="models">
+  <div class="lab">Models</div>
+  <h2>Every major lab, <em>under its own list price.</em></h2>
+  <p class="sub" id="mcount"></p>
+  <div class="tbl"><div class="top"><span class="lab">Output price · per 1M tokens · sample</span><input id="mf" placeholder="Filter models" aria-label="Filter models"><span class="lab">via Parity</span></div><div id="mrows"></div></div>
+</section>
+
+<section id="usage">
+  <div class="lab">Usage</div>
+  <h2>See where every <em>cent</em> went.</h2>
+  <p class="sub">Daily spend, a per-model breakdown and the time the gateway added to each call. Sample data shown.</p>
+  <div class="dash">
+    <div class="box"><div class="lab">Daily spend · last 14 days · sample</div><div class="bars" id="bars"></div></div>
+    <div class="box"><div class="lab">By model · sample</div><div style="margin-top:12px" id="bym"></div><div class="dl" style="margin-top:6px"><span>Gateway overhead</span><b>38 ms</b></div></div>
+  </div>
+</section>
+
+<section id="switch">
+  <div class="lab">Switch</div>
+  <h2>Switch in <em>two lines.</em></h2>
+  <p class="sub">Point your existing client at Parity. Responses carry the provider's own request ID so you can check they came from the model you asked for.</p>
+  <div class="code"><s># before</s>
+client = OpenAI(base_url="<s>https://api.openai.com/v1</s>", api_key="<s>sk-…</s>")
+<s># after</s>
+client = OpenAI(base_url="<u>https://api.parity.example/v1</u>", api_key="<u>pk-live-…</u>")</div>
+  <div class="three">
+    <div class="box"><div class="lab">01</div><h3>Direct pass-through</h3><p>No model substitution. The model you name is the model that answers.</p></div>
+    <div class="box"><div class="lab">02</div><h3>Verifiable</h3><p>Every response carries the provider's request ID, so you can match it against their own logs.</p></div>
+    <div class="box"><div class="lab">03</div><h3>No prompt storage</h3><p>Traffic is routed only to endpoints with zero data retention.</p></div>
+  </div>
+</section>
+
+<section id="supply">
+  <div class="lab">For holders</div>
+  <h2>Hold $PARITY. <em>Get credits.</em></h2>
+  <p class="sub">Stake $PARITY or run an agent on the gateway to earn credits. Anything you won't use you can list under Sell credit at a discount you choose.</p>
+  <div class="three">
+    <div class="box"><div class="lab">Stake</div><h3>Stake $PARITY</h3><p>Staked holders earn a share of credits each day, set by how much they stake.</p></div>
+    <div class="box"><div class="lab">Run</div><h3>Run an agent</h3><p>Agents that route through Parity earn credit rewards on every call they make.</p></div>
+    <div class="box"><div class="lab">Sell</div><h3>Sell credit</h3><p>List credits you won't use at your own discount. Payouts are claimed in USDC, gas paid by Parity.</p></div>
+  </div>
+</section>
+
+<section id="refer">
+  <div class="lab">Refer</div>
+  <h2>Bring builders, <em>share the fee.</em></h2>
+  <p class="sub">Share your link and earn 20% of the platform fee on everything the people you bring spend, paid in USDC.</p>
+  <div class="three"><div class="box"><div class="lab">Commission</div><div class="num">20%</div><p style="margin-top:8px">of the platform fee</p></div><div class="box"><div class="lab">Paid in</div><div class="num">USDC</div><p style="margin-top:8px">claimed any time</p></div><div class="box"><div class="lab">Lasts</div><div class="num">For life</div><p style="margin-top:8px">of the account you brought</p></div></div>
+</section>
+
+<section id="token">
+  <div class="lab">$PARITY</div>
+  <h2>The token is <em>$PARITY.</em></h2>
+  <p class="sub">$PARITY launches on pump.fun. Credits are separate: they grant access to the service, are not a token and cannot be exchanged for cash.</p>
+  <div class="box" style="margin-top:30px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:space-between"><div><div class="lab">CA</div><code id="ca2" style="font:400 14px var(--mono);word-break:break-all">Posts at launch</code></div><div style="display:flex;gap:10px"><a class="btn w" id="tb" href="#buy" aria-disabled="true">Buy $PARITY</a><a class="btn" id="tx" href="#buy" aria-disabled="true">X</a></div></div>
+</section>
+
+<section id="faq" class="faq">
+  <div class="lab">FAQ</div>
+  <h2>Straight <em>answers.</em></h2>
+  <div style="margin-top:30px">
+    <details><summary>How can it be below list price?</summary><p>Parity buys capacity in volume and pays the saving through. Today's sample numbers show up to 6% under each lab's published price, platform fee included.</p></details>
+    <details><summary>Do you swap my model for a cheaper one?</summary><p>No. Requests go to the model you name and responses carry the provider's request ID.</p></details>
+    <details><summary>Do you store prompts?</summary><p>No. Traffic goes only to zero-retention endpoints.</p></details>
+    <details><summary>Is $PARITY the same as credits?</summary><p>No. Credits pay for usage and are not a token. $PARITY is the coin holders stake for credit rewards.</p></details>
+    <details><summary>Is the gateway live?</summary><p>Not yet. This page is a demonstration: prices, models and usage numbers are samples.</p></details>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>One key. <em>Every model.</em></h2>
+  <div class="b"><a class="btn w" href="#buy">Get credits</a><a class="btn" href="#models">See the prices</a></div>
+</section>
+</main>
+
+<footer><div class="wrap"><div class="f"><a href="#faq">Terms</a><a href="#faq">Privacy</a><a href="#usage">Transparency</a><a href="#token" id="fx">X</a></div>
+<p>Parity is a demonstration. Prices, models and usage shown are samples and nothing here is live. Credits grant access to the service. They are not a token, not an investment, earn no return and cannot be exchanged for cash. $PARITY is a memecoin with no promise of value. Not financial advice.</p></div></footer>
+
+<script>
+
+var C=window.PARITY_CFG,$=function(s){return document.querySelector(s)},reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* config wiring */
+(function(){var ca=C.CA,buy=C.BUY||(ca?"https://pump.fun/coin/"+ca:""),chart=C.CHART||(ca?"https://gmgn.ai/sol/token/"+ca:"");
+ function set(id,h){var e=$(id);if(e&&h){e.href=h;e.target="_blank";e.rel="noopener";e.removeAttribute("aria-disabled")}}
+ if(ca){$("#ca").textContent=ca;$("#ca2").textContent=ca;$("#cp").hidden=false;$("#t1").textContent="on pump.fun";
+  $("#cp").onclick=function(){try{navigator.clipboard.writeText(ca)}catch(e){}this.textContent="Copied";var b=this;setTimeout(function(){b.textContent="Copy"},1400)};
+  set("#h2","https://dexscreener.com/solana/"+ca);set("#h3","https://gmgn.ai/sol/token/"+ca);set("#h4","https://axiom.trade/t/"+ca)}
+ ["#pb","#hb","#h1","#tb"].forEach(function(i){set(i,buy)});["#pc"].forEach(function(i){set(i,chart)});["#px","#tx","#fx"].forEach(function(i){set(i,C.X)});
+})();
+/* mascot follows the cursor */
+(function(){var m=$("#mascot");if(!m||reduce)return;addEventListener("pointermove",function(e){var r=m.getBoundingClientRect(),x=(e.clientX-(r.left+r.width/2))/innerWidth,y=(e.clientY-(r.top+r.height/2))/innerHeight;m.style.transform="rotate("+(x*10)+"deg) translate("+(x*18)+"px,"+(y*10)+"px)";m.style.animation="none"})})();
+/* models (sample list prices, USD per 1M output tokens) */
+var M=[["Claude Fable 5.1","anthropic/claude-fable-5.1",50,"A"],["GPT-6 Astra","openai/gpt-6-astra",50,"G"],["Claude Opus 5.5","anthropic/claude-opus-5.5",25,"A"],["Gemini 3.8 Flash","google/gemini-3.8-flash",3.5,"G"],["Grok 4.6","x-ai/grok-4.6",6,"X"],["Claude Sonnet 5.5","anthropic/claude-sonnet-5.5",15,"A"],["Claude Haiku 4.5","anthropic/claude-haiku-4.5",5,"A"],["Qwen3.8 Max","qwen/qwen-3.8-max",4.8,"Q"],["Llama 5 405B","meta/llama-5-405b",2.4,"L"],["DeepSeek V4","deepseek/deepseek-v4",1.9,"D"],["Mistral Large 3","mistral/large-3",6,"M"],["Gemini 3.8 Pro","google/gemini-3.8-pro",18,"G"]];
+var K=.94;function $$(n){return"$"+n.toFixed(2)}
+$("#mcount").textContent="470 models available. Showing the most requested (sample prices).";
+var sel=$("#msel");M.slice(0,6).forEach(function(m,i){var o=document.createElement("option");o.value=i;o.textContent=m[0];sel.appendChild(o)});
+function price(){var m=M[+sel.value],l=m[2],p=l*K;$("#pl").textContent=$$(l);$("#pp").textContent=$$(p);$("#pk").textContent=$$(l-p);$("#pd").textContent="6% less"}
+sel.onchange=price;price();
+function rows(f){var h="";M.filter(function(m){return(m[0]+m[1]).toLowerCase().indexOf(f)>-1}).forEach(function(m){h+='<div class="mr"><div class="ic">'+m[3]+'</div><div><b>'+m[0]+'</b><small>'+m[1]+'</small></div><span class="o">'+$$(m[2])+'</span><span><span class="n">'+$$(m[2]*K)+'</span><span class="d">-6%</span></span></div>'});$("#mrows").innerHTML=h||'<div class="mr"><div></div><div><small>No model matches.</small></div></div>'}
+rows("");$("#mf").oninput=function(){rows(this.value.toLowerCase())};
+/* typewriter prompt + streaming answer */
+var P="Plan a slow weekend in Kyoto.",A="Start Saturday early at Fushimi Inari before the crowds, then wander down to a quiet kissaten for coffee. Spend Sunday in Arashiyama and finish with a long dinner near the river.";
+var q=$("#q"),an=$("#ans");
+if(reduce){q.textContent=P;an.textContent=A}else{(function loop(){var i=0;q.innerHTML='<i></i>';an.textContent="";(function t(){if(i<P.length){i++;q.innerHTML=P.slice(0,i)+"<i></i>";setTimeout(t,45)}else{var j=0;(function s(){if(j<A.length){j+=2;an.textContent=A.slice(0,j);setTimeout(s,32)}else setTimeout(loop,6000)})()}})()})()}
+/* calculator */
+function calc(){var l=+$("#cr").value,p=l*K,f=l*.05;$("#cb").textContent="$"+Math.round(l-p).toLocaleString()+"/mo";$("#c1").textContent="$"+l.toLocaleString();$("#c2").textContent="$"+Math.round(p).toLocaleString();$("#c3").textContent="$"+Math.round(f).toLocaleString();$("#c4").textContent="$"+Math.round((l-p)*12).toLocaleString()}
+$("#cr").oninput=calc;calc();
+/* usage */
+var seed=7,rnd=function(){seed=(seed*9301+49297)%233280;return seed/233280},bh="";for(var i=0;i<14;i++)bh+='<i style="height:'+(25+Math.round(rnd()*75))+'%"></i>';$("#bars").innerHTML=bh;
+$("#bym").innerHTML=[["Claude Fable 5.1","$412.30"],["GPT-6 Astra","$288.10"],["Claude Sonnet 5.5","$131.75"],["Gemini 3.8 Flash","$44.20"]].map(function(r){return'<div class="dl"><span>'+r[0]+'</span><b>'+r[1]+'</b></div>'}).join("");
+</script>
+</body></html>
